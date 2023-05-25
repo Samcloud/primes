@@ -1,14 +1,15 @@
-def is_prime(n):
-    if n <= 1:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
-
 def generate_primes(N):
     primes = []
-    for num in range(2, N+1):
-        if is_prime(num):
-            primes.append(num)
+    is_prime = [True] * (N+1)
+    is_prime[0] = is_prime[1] = False
+
+    for i in range(2, int(N**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i*i, N+1, i):
+                is_prime[j] = False
+
+    for i in range(2, N+1):
+        if is_prime[i]:
+            primes.append(i)
+
     return primes
